@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>題材一覧</h2>
+  <p><a class="btn" href="{% url 'compose:session_new' %}">新規題材</a></p>
+  <table class="table">
+    <thead><tr><th>ID</th><th>お題</th><th>作成</th><th></th></tr></thead>
+    <tbody>
+      {% for s in sessions %}
+      <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.theme }}</td>
+        <td>{{ s.created_at|date:"Y-m-d H:i" }}</td>
+        <td><a class="btn" href="{% url 'compose:session_detail' s.id %}">開く</a></td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="muted">まだ題材がありません。「新規題材」から始めてください。</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

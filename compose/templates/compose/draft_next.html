@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>改稿（v+1）</h2>
+  <p class="muted">元の稿：{{ draft.text }}</p>
+  {% if cands %}
+  <h3>候補</h3>
+  <ul>
+    {% for t in cands %}
+      <li>{{ t }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div style="margin:.5rem 0;">
+      <label for="text">新しい案</label><br>
+      <input id="text" name="text" type="text" style="width:min(560px,100%);" value="{{ draft.text }}">
+    </div>
+    <button class="btn" type="submit">この内容で評価</button>
+  </form>
+  <p><a class="btn" href="{% url 'compose:draft_detail' draft.id %}">稿の詳細へ戻る</a></p>
+</section>
+{% endblock %}

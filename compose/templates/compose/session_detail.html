@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>題材 #{{ session.id }}</h2>
+  <p class="muted">お題：<strong>{{ session.theme }}</strong>{% if session.season_hint %}（季語ヒント：{{ session.season_hint }}）{% endif %}</p>
+
+  <h3>考察履歴（句案）</h3>
+  <table class="table">
+    <thead><tr><th>稿</th><th>本文</th><th>評価</th><th></th></tr></thead>
+    <tbody>
+      {% for d in drafts %}
+      <tr>
+        <td>第{{ d.version }}稿</td>
+        <td>{{ d.text }}</td>
+        <td>{% if d.rubric %}{{ d.rubric.total }} / {{ d.rubric.triplet }}{% else %}<span class="muted">未評価</span>{% endif %}</td>
+        <td><a class="btn" href="{% url 'compose:draft_detail' d.id %}">詳細</a></td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="muted">まだ句案がありません。「句案を追加」から作ってみましょう。</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p><a class="btn" href="{% url 'compose:draft_new' session.id %}">句案を追加</a></p>
+
+  <h3>道場メモ</h3>
+  <form method="post" action="{% url 'compose:move_add' session.id %}">
+    {% csrf_token %}
+    <select name="kind">
+      <option value="note">メモ</option>
+      <option value="research">調査</option>
+      <option value="idea">着想</option>
+    </select>
+    <input type="text" name="text" style="width:min(560px,100%);" placeholder="例：切れ字『かな』を試す">
+    <button class="btn" type="submit">記録</button>
+  </form>
+</section>
+{% endblock %}

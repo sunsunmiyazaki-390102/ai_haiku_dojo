@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>句案の作成</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div style="margin:.5rem 0;">
+      <label for="id_text">本文</label><br>
+      {{ form.text }}
+    </div>
+    <button class="btn" type="submit">登録して評価</button>
+  </form>
+  <p><a class="btn" href="{% url 'compose:session_detail' session.id %}">題材へ戻る</a></p>
+</section>
+{% endblock %}

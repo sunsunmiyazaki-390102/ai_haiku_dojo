@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>第{{ draft.version }}稿（題材 #{{ draft.session.id }}）</h2>
+  <p class="haiku">{{ draft.text }}</p>
+
+  {% if draft.rubric %}
+  <table class="table">
+    <thead><tr><th>総合講評（得点）</th><th>音数配列</th></tr></thead>
+    <tbody><tr><td>{{ draft.rubric.total }}</td><td>{{ draft.rubric.triplet }}</td></tr></tbody>
+  </table>
+
+  <h3>観点別講評</h3>
+  <table class="table">
+    <thead><tr><th>観点</th><th>点</th><th>根拠</th></tr></thead>
+    <tbody>
+      {% for row in breakdown_list %}
+      <tr>
+        <td>
+          <span>{{ row.label }}</span>
+          <span class="help" title="{{ row.help|default:'（説明なし）' }}">i</span>
+        </td>
+        <td>{{ row.score }}</td>
+        <td>{{ row.why }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if prev %}
+  <h3>前案との差分</h3>
+  <p>前: <span class="muted">{{ prev.text }}</span></p>
+  <p>今: <strong>{{ draft.text }}</strong></p>
+  {% endif %}
+
+  {% if delta %}
+  <h3>前案からの変化（Δ）</h3>
+  <table class="table">
+    <thead><tr><th>観点</th><th>差分</th></tr></thead>
+    <tbody>
+      <tr><td>総合</td>
+          <td>{% if delta.total > 0 %}<span class="up">+{{ delta.total }}</span>
+              {% elif delta.total < 0 %}<span class="down">{{ delta.total }}</span>
+              {% else %}<span class="zero">±0</span>{% endif %}</td></tr>
+      {% for p in delta.parts %}
+      <tr><td>{{ p.label }}</td>
+          <td>{% if p.value > 0 %}<span class="up">+{{ p.value }}</span>
+              {% elif p.value < 0 %}<span class="down">{{ p.value }}</span>
+              {% else %}<span class="zero">±0</span>{% endif %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <p><a class="btn" href="{% url 'compose:session_detail' draft.session.id %}">題材へ戻る</a></p>
+  <p><a class="btn" href="{% url 'compose:draft_next' draft.id %}">この稿から v+1 を作る</a></p>
+</section>
+{% endblock %}

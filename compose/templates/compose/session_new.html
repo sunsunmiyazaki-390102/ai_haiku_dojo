@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>新規題材</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div style="margin:.5rem 0;">
+      <label for="odai">お題</label><br>
+      <input id="odai" name="odai" type="text" style="width:min(560px,100%);" placeholder="例：秋の夜の月見">
+    </div>
+    <button class="btn" type="submit">題材をはじめる</button>
+  </form>
+</section>
+{% endblock %}

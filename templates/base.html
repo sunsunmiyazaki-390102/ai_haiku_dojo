@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI俳句道場</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=ja-labels2">
+</head>
+<body>
+  <header class="py-3">
+    <div class="container">
+      <h1>AI俳句道場</h1>
+      <nav>
+        <a href="{% url 'compose:home' %}">題材一覧</a>
+        <a href="{% url 'compose:session_new' %}">新規題材</a>
+      </nav>
+    </div>
+  </header>
+  <main class="py-6">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  <footer class="py-6">
+    <div class="container muted">© 2025</div>
+  </footer>
+</body>
+</html>
