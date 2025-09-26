@@ -1,5 +1,4 @@
 *               text=auto eol=lf
-
 # ???????LF???
 *.py            text eol=lf
 *.html          text eol=lf
@@ -22,7 +21,6 @@
 *.jpg           binary
 *.jpeg          binary
 *.gif           binary
-*.svg           text eol=lf   # SVG????????LF???
+*.svg           text eol=lf
 *.woff          binary
 *.woff2         binary
-
