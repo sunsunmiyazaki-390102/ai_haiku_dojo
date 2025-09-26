@@ -27,5 +27,6 @@ TIME_ZONE = "Asia/Tokyo"
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = "/static/"
+STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", str(BASE_DIR / "staticfiles"))
 STATICFILES_DIRS = [BASE_DIR / "compose" / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
